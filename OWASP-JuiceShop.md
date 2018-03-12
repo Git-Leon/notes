@@ -17,7 +17,7 @@ npm install
 npm start
 ```
 * The server begins listening on [port 3000](localhost:3000) by default
-' or 1=1//
+`' or 1=1//`
 ## What is being served?
 * A virtual market which vends _mostly_ foods; particularly punny ones.
 	* _Raspberry Juice made of Raspberry Pi Microcontrollers_
