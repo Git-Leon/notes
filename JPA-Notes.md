@@ -1,14 +1,3 @@
-* What is an ORM tool?
-* What iw JPA?
-* What is not JPA?
-* JPA Mapping annotation
-	* to map out objects into database
-
-* API
-	* Set of CRUD operations used to query objects in java
-
-
-
 # Mechanisms for Storing Data
 
 ## Relational Database Perspective
@@ -65,13 +54,19 @@
 
 ### Annotations
 * **Notes**
-	* After annotating each entity properly, JPA offers the ability to query them and their relationships in an object oriented way, withut having to use the underling db foreign keys and columns
+	* After annotating each entity properly, JPA offers the ability to query them and their relationships in an object oriented way, without having to use the underlying database foreign keys and columns.
 
 
 * **Definitions:**
 	* `@Entity`
+		* Annotates class signatures
 		* An object representative of a snap shot of data from a database.
+		* Each `Entity` must be annotated with a respective `ID`.
+	* `@Id`
+		* Annotates field declarations
+		* Denotes the primary key for this `Entity`.
 	* `Table(name = "tableName")`
+		* Annotates class signatures
 		* Used in conjunction with `@Entity`
 		* Denotes the table the entity is stored in.
 
@@ -96,31 +91,63 @@
 	
 ### What is an `EntityManager` ?
 * The centralized service to manipulate instance of entity.
-* Provide an API to create, find, remove, and synchronize objects with the database.
+* Provides a `CRUD` API to create, find, remove, and synchronize objects with the database.
 	* does **not** make use of an explicit `update` method as its synchronization should automatically update the state of a managed entity.
-* Can perform basic query operations given a unique identifier.
 * Can be obtained through `EntityManagerFactory`
-	* `Persistence.createEntityManagerFactory("persistenceUnitName")`
+
+	```java
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistenceUnitName")
+	EntityManager em = emf.createEntityManager();
+	```
+	
+* Can perform basic query operations given a unique identifier.
+
+	```java
+	Long id = 0;
+	Person person = em.find(Person.class, id);
+	```
+
 * Can perform JPQL querys
 
 	```java
-	em.createQuery("SELECT person FROM people ORDER BY person.name")
+	String jpql = "SELECT person FROM people ORDER BY person.name";
+	Query query = em.createQuery(jpql);
+	query.executeUpdate();
+	```
+	
+* Can perform a `merge`
+	* Merge takes a detached object and returns a managed entity.
+
+	```java
+	Person managedEntity = em.merge(new Person())
 	```
 
-* Entities are not persisted until an `EntityManager` explicitly persists the object.
+* Can perform a `persist`
+	* Entities are not persisted until an `EntityManager` explicitly persists the object.
 	* When an object is persisted, it is manageable by the `EntityManager` and eligible to be inserted into the database upon committing the transaction.
 
 	```java
 	em.persist(new Person())
 	```
 
-* Can perform a `merge`
-	* Merge takes a detached object and returns a managed entity.
-
 ### What is an `EntityTransaction`?
 * An abstraction that is used to group together a series of operations.
 	* Ensure all operations succeed, or none of them are executed.
+* Can be obtained from `EntityManager`
+
+	```java
+	EntityTransaction et = em.getTransaction();
+	```
+
 * Begins and commits transactions performed by `EntityManager`
+	
+	```java
+	et.begin();
+	
+	em.persist(entity);
+	
+	et.commit();
+	```
 
 ### What is `JPQL`?
 * Java Persistence Query Language
@@ -154,12 +181,61 @@
 * Bridge between persistence context and database.
 * an xml file called `persistence.xml`
 	* `persistence-unit` tag has a `name` attribute.
-	* `class` tags within a `persistence-unit` wrap class-paths of classes to be persisted.
-	* `properties` tag tells persistence context:
+	* `class` tag must be embedded within `persistence-unit`
+		* wraps around class-paths of classes to be persisted.
+
+
+	* `property` tag tells persistence context:
 		* which JDBC driver to use
 		* where the database is located
 		* username
 		* password
+		* a property with a name prefixed with `javax.persistence.` is _portable_; it will be interpreted by all JPA provider implementations.
+
+		* The below xml snippet is an example of a property configuration such that
+	
+			* `database-product-name`
+				* the persistence context must perform mapping on a specified-type database, `Derby`
+					* (`Oracle`, `MySQL`, or `DB2` are also valid)
+			* `schema-generation.database.action`
+				* instructs provider to drop and create the database schema
+			* `schema-generation.scripts.action`
+				* the persistence context can generate the DDL scripts of the database.
+				* this attribute enforces the setting of `schema-generation.scripts.create-target`
+				* this attribute enforces the setting of `schema-generation.scripts.drop-target`
+			* `schema-generation.scripts.create-target`
+				* name of file which contains all `CREATE` statements
+			* `schema-generation.scripts.drop-target`
+				* name of file which contain sall `DROP` statements
+			 
+
+
+			```xml
+			<properties>
+				<property name="javax.persistence.database-product-name"
+					value = "Derby"/>
+					
+				<property name="javax.persistence.schema-generation.database.action"
+					value = "drop-and-create"/>
+
+				<property name="javax.persistence.schema-generation.scripts.action"
+					value="drop-and-create"/>
+
+				<property name="javax.persistence.schema-generation.scripts.create-target"
+					value="create.ddl"/>
+
+				<property name="javax.persistence.schema-generation.scripts.drop-target"
+					value="drop.ddl"/>
+					
+				<property name="eclipselink.logging.level"
+					value="INFO"/>
+			</properties>
+			```
+	
+
+
+
+	* `provider` tag tells each persistence context
 * Named configuration of this set of entities.
 * Ensures entites are persisting as configured
 	* i.e. - ensure instances to be persisted have non-repeating ids within this context
