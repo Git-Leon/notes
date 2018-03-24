@@ -13,7 +13,7 @@
 * Select your version of RTC by navigating to the [online maven repository](https://mvnrepository.com/artifact/org.jenkins-ci.plugins/rtc/). 
 * Alternatively, you can open your pom and paste this version of the dependency between your `dependencies` tag.
 
-```
+```xml
 <dependency>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>rtc</artifactId>
