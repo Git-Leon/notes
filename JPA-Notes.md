@@ -106,12 +106,14 @@
 	```java
 	em.createQuery("SELECT person FROM people ORDER BY person.name")
 	```
+
 * Entities are not persisted until an `EntityManager` explicitly persists the object.
 	* When an object is persisted, it is manageable by the `EntityManager` and eligible to be inserted into the database upon committing the transaction.
 
-		```java
+	```java
 	em.persist(new Person())
 	```
+
 * Can perform a `merge`
 	* Merge takes a detached object and returns a managed entity.
 
