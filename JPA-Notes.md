@@ -276,8 +276,8 @@
 			* `persistence.xml`
 
 				```xml
-			<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-			```
+				<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+				```
 
 			* `pom.xml`
 
