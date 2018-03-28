@@ -263,11 +263,22 @@
 			* [resource1](https://stackoverflow.com/questions/40683423/i-cant-find-resolve-persistenceexception-no-persistence-provider-for-entityman)
 			* [resource2](https://stackoverflow.com/questions/39410183/hibernate-5-2-2-no-persistence-provider-for-entitymanager)
 
-		* Hibernate implementation
+		* [Hibernate implementation](https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager/3.3.2.GA)
 			* `persistence.xml`
 
 				```xml
 				<provider>org.hibernate.ejb.HibernatePersistence</provider>
+				```
+			* `pom.xml`
+
+				```xml
+				<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
+				<dependency>
+				    <groupId>org.hibernate</groupId>
+				    <artifactId>hibernate-entitymanager</artifactId>
+				    <version>3.3.2.GA</version>
+				    <type>pom</type>
+				</dependency>
 				```
 
 
