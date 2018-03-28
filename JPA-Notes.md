@@ -1,6 +1,6 @@
-# Mechanisms for Storing Data
+# Mechanisms for Storing and Manipulating Data
 
-## Relational Database Perspective
+## Relational Database Paradigm
 * A database stores data in tables.
 * Tables store data in rows and columns.
 	* Each row represents a single entity in a table.
@@ -9,7 +9,7 @@
 	* Each table must specify a column or group of columns called the [primary key](https://en.wikipedia.org/wiki/Primary_key).
 		* ensures each row has a unique way to be identified
 
-## Object Oriented Perspective
+## Object Oriented Paradigm
 * An application stores data in Lists.
 * Lists store data in Objects.
 	* A single object in a list is an instance.
@@ -40,9 +40,8 @@
 * Brings easy mechanism for mapping objects to relational databases thanks to meta data
 * Manages lifecycle of persistent objects
 * Features include
-	* `EntityManager` API to perform CRUD and db-related operations
-	* Java Persistence Query Language
-	* object-oriented query language
+	* `EntityManager` API to perform CRUD and database-related operations
+	* Java Persistence Query Language, an object-oriented query language
 
 ## JPA Implementations
 * JPA has 3 implementations
@@ -71,17 +70,17 @@
 		* Denotes the table the entity is stored in.
 
 ### What is an `Entity`?
-* An entity is denoted using the `@Entity` annotation on a respective class signature.
 * An entity is object which lives shortly in-memory, and persistently in a database.
-* Each entity consists of metadata.
-* Each entity has some metadata that describes its relationship with an underlying database
+* An entity is denoted using the `@Entity` annotation on a respective class signature.
+* An entity consists of metadata.
+* An entity has some metadata that describes its relationship with an underlying database
 
 ### What is `MetaData`?
 * Metadata is information that is held as a description of stored data.
 * Additional metadata can be specified using annotations to further describe relationships.
 	* Examples: `@Table`, `@Id`, `@GeneratedValue`
 * To denote an entity is stored in a table, (e.g. a table named `people`), annotate the class signature with `@Table` (e.g. `@Table(name = "people")`
-	* For example, given a Table of `Person` objects named `People`, one expects a `Person` entity to be declare a signature of
+	* For example, given a Table of `Person` objects named `People`, one expects a `Person` entity with an annotated class signature of
 
 	```java
 	@Entity
@@ -132,7 +131,7 @@
 
 ### What is an `EntityTransaction`?
 * An abstraction that is used to group together a series of operations.
-	* Ensure all operations succeed, or none of them are executed.
+	* Ensures all operations succeed, or none of them are executed.
 * Can be obtained from `EntityManager`
 
 	```java
@@ -179,6 +178,9 @@
 ### What is a `Persistence Unit`?
 
 * Bridge between persistence context and database.
+* Named configuration of this set of entities.
+* Ensures entites are persisting as configured
+	* i.e. - ensure instances to be persisted have non-repeating ids within this context
 * an xml file called `persistence.xml`
 	* `persistence-unit` tag has a `name` attribute.
 	* `class` tag must be embedded within `persistence-unit`
@@ -193,7 +195,15 @@
 		* a property with a name prefixed with `javax.persistence.` is _portable_; it will be interpreted by all JPA provider implementations.
 
 		* The below xml snippet is an example of a property configuration such that
-	
+			* `javax.persistence.jdbc.driver`
+				* tells persistence context which JDBC driver to use
+			* `javax.persistence.jdbc.url`
+				* where the database is located
+			* `javax.persistence.jdbc.user`
+				* user name
+			* `javax.persistence.jdbc.password`
+				* password
+
 			* `database-product-name`
 				* the persistence context must perform mapping on a specified-type database, `Derby`
 					* (`Oracle`, `MySQL`, or `DB2` are also valid)
@@ -206,12 +216,24 @@
 			* `schema-generation.scripts.create-target`
 				* name of file which contains all `CREATE` statements
 			* `schema-generation.scripts.drop-target`
-				* name of file which contain sall `DROP` statements
-			 
+				* name of file which contains all `DROP` statements
 
 
 			```xml
 			<properties>
+				 <property name="javax.persistence.jdbc.driver"
+				      value="org.hsqldb.jdbcDriver"/>
+				
+				<property name="javax.persistence.jdbc.url"
+				      value="objectdb://localhost/my.odb"/>
+				
+				<property name="javax.persistence.jdbc.user"
+				      value="root"/>
+				
+				
+				<property name="javax.persistence.jdbc.password"
+				      value=""/>
+                      
 				<property name="javax.persistence.database-product-name"
 					value = "Derby"/>
 					
@@ -236,6 +258,33 @@
 
 
 	* `provider` tag tells each persistence context
-* Named configuration of this set of entities.
-* Ensures entites are persisting as configured
-	* i.e. - ensure instances to be persisted have non-repeating ids within this context
+		* Having issues with this? 
+		* Visit this [gist of different provider configuration](https://gist.github.com/sudiptasharif/7ef40d5a495bced5f15710cbe8fb268a)
+			* [resource1](https://stackoverflow.com/questions/40683423/i-cant-find-resolve-persistenceexception-no-persistence-provider-for-entityman)
+			* [resource2](https://stackoverflow.com/questions/39410183/hibernate-5-2-2-no-persistence-provider-for-entitymanager)
+
+		* Hibernate implementation
+			* `persistence.xml`
+
+				```xml
+				<provider>org.hibernate.ejb.HibernatePersistence</provider>
+				```
+
+
+
+		* [EclipseLink implementation](https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.jpa/2.7.1)
+			* `persistence.xml`
+
+				```xml
+			<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+			```
+
+			* `pom.xml`
+
+				```xml
+				<dependency>
+				    <groupId>org.eclipse.persistence</groupId>
+				    <artifactId>eclipselink</artifactId>
+				    <version>2.5.0</version>
+				</dependency>
+				```
