@@ -17,6 +17,16 @@
 	* Each instance is defined by a [class](https://en.wikipedia.org/wiki/Class_(computer_programming))
 	* Each instance can be uniquely identified by their [memory address](https://en.wikipedia.org/wiki/Memory_address).
 
+### OOP Relationships
+* Associations between objects cause one object to cause another to perform an action its behalf; these associations have `multiplicity` which is composed of `cardinality` and `direction`.
+* `object oriented cardinality` - models the aspect of how many entities exist on each side of the relationship; denoted by a range of numbers (i.e. `0..1`)
+	* `one-to-many` - 
+	* `one-to-one`
+* `object oriented direction` - models the fact that an object refers to another object
+	* `unidirection` - `A` can reference `B`, `B` cannot reference `A`  .
+	* `bidirectional` `A` and `B` can refer to `B` and `A` respectively.
+	* 
+
 
 
 ## Object Relational Mapping
@@ -31,10 +41,12 @@
 
 
 
+
+
 # JPA
 
-
 ## What is JPA?
+* Maps an entity to an already existing table using sets of annotation.
 * Abstraction above JDBC that makes it possible to be independent of databases
 * Generates SQL statements and executes them using JDBC onto the underlying database.
 * Brings easy mechanism for mapping objects to relational databases thanks to meta data
@@ -52,26 +64,129 @@
 ## API
 
 ### Annotations
-* **Notes**
-	* After annotating each entity properly, JPA offers the ability to query them and their relationships in an object oriented way, without having to use the underlying database foreign keys and columns.
+* After annotating each entity properly, JPA offers the ability to query them and their relationships in an object oriented way, without having to use the underlying database foreign keys and columns.
 
 
-* **Definitions:**
-	* `@Entity`
-		* Annotates class signatures
-		* An object representative of a snap shot of data from a database.
-		* Each `Entity` must be annotated with a respective `ID`.
-	* `@Id`
-		* Annotates field declarations
-		* Denotes the primary key for this `Entity`.
-	* `Table(name = "tableName")`
-		* Annotates class signatures
-		* Used in conjunction with `@Entity`
-		* Denotes the table the entity is stored in.
+
+#### `@Entity`
+* Annotates class signature
+* **Description:**
+	* Allows the persistence provider to recognize it as a persistence class.
+	* An object representative of a snap shot of data from a database.
+	* By default, maps this entity to a table whose name is the name of the annotated class. Can be rerouted via the `@Table` annotation
+* **Pre-requesites for use:**
+	* An interface cannot be an entity.
+	* An enum cannot be an entity.
+	* The class can be abstract or concrete.
+	* The class must define a no-arg constructor.
+	* Each `Entity` must be annotated with a respective `ID`.
+
+
+
+#### `@Id`
+* Annotates field declarations
+* **Description:**
+	* Denotes the primary key for this `Entity`.
+	* Can be generated manually by application or by automatically by the persistence provider.
+* **Pre-requisites for use:**
+	* Class must be annotated with `@Entity`
+
+	
+	
+	
+#### `Table(name = "TABLE_NAME")`
+* Annotates class signatures
+* **Description:**
+	* Routes this entity to a table whose name is the specified value.
+* **Attributes:**
+	* **Required:**
+		* `name` - specifies the name of the table to route this entity to.
+	* **Optional:**
+		* `catalog` - respective named collection of schemas in an SQL-environment. 
+		* `schema`- used to differentiate one set of tables from another
+
+* **Pre-requesites for use:**
+	* Class must be annotated with `@Entity`.
+	
+	
+	
+#### `@GeneratedValue(strategy = GenerationType.ENUM_VALUE)`
+* Annotates `Id` fields.
+* **Description:**
+	* Specifies how the persistence provider will generate this value.
+	* `GenerationType.SEQUENCE` - specifies the use of database SQL sequence
+	* `GenerationType.IDENTITY` - uses a database identity column
+	* `GenerationType.TABLE` - instructs provider to store the sequence name and its current value in a table, increasing the value of each time a new instance of the entity is persisted.
+	* `GenerationType.AUTO` - default when nothing specified. Provider does generation of a key automatically. It will select an appropriate strategy for a particular database.
+* **Pre-requesites for use:**
+	* Field must be annotated with `@Id`.
+
+	
+	
+	
+#### `@Column(name = "COLUMN_NAME")`
+* **Description:**
+	* This annotation reroutes the mapping of this field to a column with the specified name.
+	* By defualt in JPA, fields map to a column whose name is the name of the instance variable. (i.e. - `firstName` field maps to `firstName` column).
+* **Attributes:**
+	* **Required:**
+		* `name` - specifies the column name to route this field  to.
+	* **Optional:**
+		* `length` - specify the length of characters this `String` field can hold.
+		* `nullable` - can be null.
+* **Pre-requesites for use:**
+	* Class must be annotated with `@Entity`.
+	* Must annotate a `getter`, or field declaration.
+	
+	
+	
+#### `@Temporal(TemporalType.ENUM_VALUE)`
+* Annotates a field / instance variable
+* Specifies has to represent this `Temporal` java object in the database.
+* **Valid arguments:**
+	* `TemporalType.DATE` - least precision
+	* `TemporalType.TIME` - higher precision
+	* `TemporalType.TIMESTAMP` - highest precision
+* **Pre-requesites for use:**
+	* Class must be annotated with `@Entity`.
+	* Field must be of a java `Temporal` type: `Date`, `LocalDate`, `TimeStamp`, etc.
+
+#### `@Transient`
+* Ensures JPA does not map this attribute.
+
+#### `Enumerated(EnumType.HOW_TO_PERSIST)`
+* `EnumType.ORDINAL` - Instructs JPA to map this enumeration's `ordinal()` value to a respective `integer` value in the database.
+* `EnumType.STRING` Instructs JPA to map this enumeration's `name()` value to a respective `varchar` in the database.
+
+
+
+
+
+
+### What is a Database Catalog?
+* [Catalogs](https://stackoverflow.com/questions/7022755/whats-the-difference-between-a-catalog-and-a-schema-in-a-relational-database) are named collections of schemas in an SQL-environment. 
+
+
+
+### What is Configuration by Exception?
+* Unless specified differently, the JPA provider should apply default rules.
+	* Having to supply a configuration is an exception to the rule.
+* An entity's instance variables also become persistent following default mapping, also called `configuration by exception`.
+* JDBC rules apply for mapping Java primitives through relational data-types.
+	* `String` is mapped to `VARCHAR(255)`.
+	* `Long` is mapped to `BIGINT`.
+	* `Boolean` is mapped to `SMALLINT`
+	* `Enum` is mapped to `INTEGER`
+
+* **Other aliases for this phrase:**
+	* Programming by exception
+	* Convention over configuration
 
 ### What is an `Entity`?
 * An entity is object which lives shortly in-memory, and persistently in a database.
 * An entity is denoted using the `@Entity` annotation on a respective class signature.
+* Entity's can be configured via `@Entity` annotation or `XML` configuration.]
+	* **XML configuration takes precedence!**
 * An entity consists of metadata.
 * An entity has some metadata that describes its relationship with an underlying database
 
@@ -148,14 +263,6 @@
 	et.commit();
 	```
 
-### What is `JPQL`?
-* Java Persistence Query Language
-	* object oriented language for querying from relation database
-
-
-### What is `Persistence`?
-* Persisting an entity is the operation of taking a transient object and storing its state to the database.
-* This is typically done by an intermediate service object which references an `EntityManager`.
 
 ### What is a `Service Object`?
 * An application's business logic or individual functions are modularized and presented as services for consumer/client applications.
@@ -167,6 +274,16 @@
 	* `read` entities into an application from a database.
 	* `update` entities in a database.
 	* `delete` entities from a database.
+
+
+### What is `JPQL`?
+* Java Persistence Query Language
+	* object oriented language for querying from relation database
+
+
+### What is `Persistence`?
+* Persisting an entity is the operation of taking a transient object and storing its state to the database.
+* This is typically done by an intermediate service object which references an `EntityManager`.
 
 
 ### What is a `Persistence Context`?
@@ -193,6 +310,7 @@
 		* username
 		* password
 		* a property with a name prefixed with `javax.persistence.` is _portable_; it will be interpreted by all JPA provider implementations.
+
 
 		* The below xml snippet is an example of a property configuration such that
 			* `javax.persistence.jdbc.driver`
