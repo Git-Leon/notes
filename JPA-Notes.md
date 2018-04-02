@@ -154,7 +154,7 @@
 #### `@Transient`
 * Ensures JPA does not map this attribute.
 
-#### `Enumerated(EnumType.HOW_TO_PERSIST)`
+#### `@Enumerated(EnumType.HOW_TO_PERSIST)`
 * `EnumType.ORDINAL` - Instructs JPA to map this enumeration's `ordinal()` value to a respective `integer` value in the database.
 * `EnumType.STRING` Instructs JPA to map this enumeration's `name()` value to a respective `varchar` in the database.
 
