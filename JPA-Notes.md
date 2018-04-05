@@ -20,8 +20,11 @@
 ### OOP Relationships
 * Associations between objects cause one object to cause another to perform an action its behalf; these associations have `multiplicity` which is composed of `cardinality` and `direction`.
 * `object oriented cardinality` - models the aspect of how many entities exist on each side of the relationship; denoted by a range of numbers (i.e. `0..1`)
-	* `one-to-many` - 
+	* View [PluralSight's tutorial on cardinality](https://app.pluralsight.com/player?course=java-persistence-api-21&author=antonio-goncalves&name=java-persistence-api-21-m4-relinh&clip=2&mode=live)
 	* `one-to-one`
+	* `one-to-many`
+	* `many-to-one`
+	* `many-to-many`
 * `object oriented direction` - models the fact that an object refers to another object
 	* `unidirection` - `A` can reference `B`, `B` cannot reference `A`  .
 	* `bidirectional` `A` and `B` can refer to `B` and `A` respectively.
@@ -46,8 +49,11 @@
 # JPA
 
 ## What is JPA?
+* Abstraction above JDBC that makes it possible model databases as objects.
+* Has two main purposes:
+	1. ability to map objects to relational database.
+	2. ability to query these mapped objects.
 * Maps an entity to an already existing table using sets of annotation.
-* Abstraction above JDBC that makes it possible to be independent of databases
 * Generates SQL statements and executes them using JDBC onto the underlying database.
 * Brings easy mechanism for mapping objects to relational databases thanks to meta data
 * Manages lifecycle of persistent objects
@@ -60,6 +66,22 @@
 	* EclipseLink
 	* Hibernate
 	* Apache Open JPA
+
+## JPA Inheritance
+* JPA has 3 strategies for modeling inheritance
+	* `table-per-concrete-class`
+		* all columns on root entity must be mapped to columns on child entity
+		* no shared table
+		* no shared column
+		* no discriminator column
+	* `single-table-per-class`
+		* default inheritance strategy.
+		* requires all child fields are nullable.
+		* introduces redundancies.
+	* `joined-subclass`
+		* all columns on root entity must will be mapped to columns on child entity via join statements of two tables modeling each of entity's fields separately.
+* JPA inheritance ensures that common fields within a hierarchy (i.e. `Id`) are abstracted into the superclass; Subclasses refer to the superclass's `Id` field.
+
 
 ## API
 
@@ -122,7 +144,16 @@
 	* Field must be annotated with `@Id`.
 
 	
-	
+#### `@DiscriminatorColumn`
+* View [Pluralsight's Intro-to-JPA-Inheritance video](https://app.pluralsight.com/player?course=java-persistence-api-21&author=antonio-goncalves&name=java-persistence-api-21-m4-relinh&clip=9&mode=live)
+* **Description:**
+	* Allows the provider to know which row belongs to which entity.
+	* Used as part of JPA's inheritance-modeling strategy.
+	* Declared by the superclass.
+* **Attributes:**
+	* `discriminatorType = DiscriminatorType.ENUM_VALUE`
+	* `name = "COLUMN_NAME"`
+	* `columnDefinition = "TINYINT(1)"`
 	
 #### `@Column(name = "COLUMN_NAME")`
 * **Description:**
@@ -160,7 +191,37 @@
 
 
 
+#### Cardinal Relationships
+* `OneToOne`
+* `@OneToMany`
+* `@ManyToMany`
+* `@ManyToOne`
 
+* **Optional Attributes:**
+ 	* `cascade = ALL`
+	* `cascade = {PERSIST, REMOVE, MERGE}`
+		* if `EntityManager` invokes `persist`,`remove`, or `merge` on this entity, then its composite `cascaded` members be affected by the same method invokation.
+
+
+
+## Frequently Asked Questions (FAQs)
+
+### What is a discriminator column?
+* Always in the table of the base entity.
+
+### What is a cascading event?
+* Process whereby something information is successively passed on
+
+
+### What is fetching?
+* The mechanism by which a client gets from one side of a relationship to another.
+	* eager fetch - immediately
+	* lazy fetch - defferered
+
+
+
+### What is a Join Table?
+* A join is a view of two tables linked by two foreign keys referring to each other's primary key.
 
 
 ### What is a Database Catalog?
@@ -256,13 +317,20 @@
 * Begins and commits transactions performed by `EntityManager`
 	
 	```java
-	et.begin();
+	et.begin(); // begin a set of operations; a transaction
+
+	em.merge(entity); // begin managing entity
+	em.persist(entity); // begin persisting entity
 	
-	em.persist(entity);
-	
-	et.commit();
+	et.commit(); // execute all operations since transaction began
 	```
 
+### What is a `Managed Entity`?
+
+
+### What is a `Query`?
+* A query is a statement which describes a selection of entities from a database.
+* Queries allow a client to search,  sort, aggregate, and analyze data.
 
 ### What is a `Service Object`?
 * An application's business logic or individual functions are modularized and presented as services for consumer/client applications.
@@ -276,9 +344,35 @@
 	* `delete` entities from a database.
 
 
-### What is `JPQL`?
-* Java Persistence Query Language
-	* object oriented language for querying from relation database
+### What is `Java Persistence Query Language` (`JPQL`)?
+* object oriented language for querying from relation database.
+* retrieve an entity by any criteria.
+* mocks SQL syntax, but rather than retrieving rows, it retrieve collections of entities.
+* query is executed on underlying database with `SQL` and `JDBC` calls and the entity instances are the attributes set and are returned to the application.
+
+* **SQL Syntax:**
+
+	```SQL
+SELECT		*
+FROM		item
+WHERE		unit_cost > 100.00
+ORDER BY	title;
+```
+
+
+* **JQL Syntax:**
+
+	```SQL
+SELECT		i
+FROM		Item i
+WHERE		i.unitCost > 100.00
+ORDER BY	i.title;
+```
+
+* Notice that JPQL uses the dot-notation to express reference to the _item's attribute_ as opposed to SQL using the _table's column-name_.
+* JPQL manipulates objects and attributes, not tables and columns.
+
+
 
 
 ### What is `Persistence`?
