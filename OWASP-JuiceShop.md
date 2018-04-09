@@ -50,11 +50,11 @@ npm start
 
 ## Challenges
 * Challenge 1 - Find Scoreboard
-	* Navigate to Juice Shop via [this link](localhost:3000)
+	* Navigate to `localhost:3000` to view the Juice Shop.
 	* Open console
 	* Open source view via the `CMD+U` shortcut.
-	* Open search bar via the `CMD+F` shortcut.
-	* Search `score-board`
+	* Open find-in-page via the `CMD+F` shortcut.
+	* Search for the string `score-board`
 	* Navigate to the respective `anchor` tag's `href` [attribute](http://localhost:3000/#/score-board).
 
 * Challenge 2 - Provoke an error that is not gracefully handled
@@ -65,14 +65,15 @@ npm start
 		* **Password:** `_`
 	* Upon clicking the `login` button, an error message reveals a respective user and password
 
-* Challenge 2 - Login as in Admin
+* Challenge 3 - Login as in Admin
 	* Navigate to Juice Shop
 	* Log out
 	* Log in using
 		* **Email:** `' or 1=1--`
 		* **Password:** `_`
 	* Upon clicking the `login` button, an error message reveals a respective user and password
-* Challenge 3 - Login as 
+
+* Challenge 4 - Login as 
 
 
 
