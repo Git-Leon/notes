@@ -93,9 +93,9 @@ npm start
 	* Navigate to Juice Shop
 	* Log out
 	* Log in using
-		* **Email:** `' or 1=1--`
+		* **Email:** `' or 1=1;//`
 		* **Password:** `_`
-	* Upon clicking the `login` button, an error message reveals a respective user and password
+	* Upon clicking the `login` button you should receive an challenge-achievement for logging in as an Administrator.
 
 * Challenge 4 - Login as 
 
