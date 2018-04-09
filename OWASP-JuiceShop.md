@@ -70,7 +70,7 @@ npm start
 
     "error":{
         "message":"SQLITE_ERROR: near \"/\": syntax error",
-        "stack":"SequelizeDatabaseError: SQLITE_ERROR: near \"/\": syntax error\n at Query.formatError (/Users/leon/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:423:16)\n at afterExecute (/Users/leon/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:119:32)\n at replacement (/Users/leon/dev/juice-shop/node_modules/sqlite3/lib/trace.js:19:31)\n at Statement.errBack (/Users/leon/dev/juice-shop/node_modules/sqlite3/lib/sqlite3.js:16:21)",
+        "stack":"SequelizeDatabaseError: SQLITE_ERROR: near \"/\": syntax error\n at Query.formatError (/Users/myUsername/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:423:16)\n at afterExecute (/Users/myUsername/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:119:32)\n at replacement (/Users/myUsername/dev/juice-shop/node_modules/sqlite3/lib/trace.js:19:31)\n at Statement.errBack (/Users/myUsername/dev/juice-shop/node_modules/sqlite3/lib/sqlite3.js:16:21)",
         "name":"SequelizeDatabaseError",
         "parent":{
             "errno":1,
