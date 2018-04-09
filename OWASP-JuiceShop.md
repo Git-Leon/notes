@@ -101,3 +101,4 @@ npm start
 
 ## Resources
 * [Wiki page](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project)
+* [Bkimminich's Git-Page](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/challenges.html)
