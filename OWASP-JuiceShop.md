@@ -66,7 +66,26 @@ npm start
 	* Upon clicking the `login` button, an error message reveals a respective user and password
 
 ```JSON
-{"error":{"message":"SQLITE_ERROR: near \"/\": syntax error","stack":"SequelizeDatabaseError: SQLITE_ERROR: near \"/\": syntax error\n at Query.formatError (/Users/leon/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:423:16)\n at afterExecute (/Users/leon/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:119:32)\n at replacement (/Users/leon/dev/juice-shop/node_modules/sqlite3/lib/trace.js:19:31)\n at Statement.errBack (/Users/leon/dev/juice-shop/node_modules/sqlite3/lib/sqlite3.js:16:21)","name":"SequelizeDatabaseError","parent":{"errno":1,"code":"SQLITE_ERROR","sql":"SELECT * FROM Users WHERE email = '' or 1=1//' AND password = 'b14a7b8059d9c055954c92674ce60032'"},"original":{"errno":1,"code":"SQLITE_ERROR","sql":"SELECT * FROM Users WHERE email = '' or 1=1//' AND password = 'b14a7b8059d9c055954c92674ce60032'"},"sql":"SELECT * FROM Users WHERE email = '' or 1=1//' AND password = 'b14a7b8059d9c055954c92674ce60032'"}}
+{
+
+    "error":{
+        "message":"SQLITE_ERROR: near \"/\": syntax error",
+        "stack":"SequelizeDatabaseError: SQLITE_ERROR: near \"/\": syntax error\n at Query.formatError (/Users/leon/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:423:16)\n at afterExecute (/Users/leon/dev/juice-shop/node_modules/sequelize/lib/dialects/sqlite/query.js:119:32)\n at replacement (/Users/leon/dev/juice-shop/node_modules/sqlite3/lib/trace.js:19:31)\n at Statement.errBack (/Users/leon/dev/juice-shop/node_modules/sqlite3/lib/sqlite3.js:16:21)",
+        "name":"SequelizeDatabaseError",
+        "parent":{
+            "errno":1,
+            "code":"SQLITE_ERROR",
+            "sql":"SELECT * FROM Users WHERE email = '' or 1=1//' AND password = 'b14a7b8059d9c055954c92674ce60032'"
+        },
+        "original":{
+            "errno":1,
+            "code":"SQLITE_ERROR",
+            "sql":"SELECT * FROM Users WHERE email = '' or 1=1//' AND password = 'b14a7b8059d9c055954c92674ce60032'"
+        },
+        "sql":"SELECT * FROM Users WHERE email = '' or 1=1//' AND password = 'b14a7b8059d9c055954c92674ce60032'"
+    }
+
+}
 ```
 
 
