@@ -1,17 +1,3 @@
-# Who are we?
-* 3 month programming bootcamp.
-* 92% Job placement within 3 months
-* 96% Job placement within 6 months
-* 99% Job placement with last
-* $64,000 average post-graduate income historically since the fruition of the program.
-	* Approximately $75,000 average post-graduate income for last class.
-* $3000 up front, but can be waived if you can prove your income qualifies.
-
-
-* Have you ever been at a job and you felt underpaid?
-
-
-
 # Owasp Top 10 Appliction Security Risks - 2017
 
 ## 1. Injection flaws
