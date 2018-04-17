@@ -140,11 +140,11 @@ automated attack tooling.
 ## 6. Security Misconfiguration
 * Most commonly seen issue
 * Often the result of:
-        * insecure default configurations
-        * incomplete / adhoc configurations
-        * open cloud storage
-        * misconfigured HTTP headers
-        * verbose error messages containing sensitive information
+       * insecure default configurations
+       * incomplete / adhoc configurations
+       * open cloud storage
+       * misconfigured HTTP headers
+       * verbose error messages containing sensitive information
 * Operating systems, framework, libraries, and applications must be
 patched/upgraded in a timely fashion
 
