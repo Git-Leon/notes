@@ -21,6 +21,15 @@ WHERE username = 'admin'
 AND password = 'password'
 ```
 
+* However, consider the case that the user enters `';DROP members;//` as the username; The resulting query to be executed by your application will be
+
+```SQL
+SELECT *
+FROM members
+WHERE username = '';DROP members;
+//'AND password = 'password'
+```
+
 
 
 
@@ -33,12 +42,12 @@ user's identities.
 ### Is my Application Vulnerable?
 * If your application supports any of these features, it is vulnerable
 to `Broken Authentication` breeches.
-        * Permits automated attacks such as credential stuffing, where the
+    * Permits automated attacks such as credential stuffing, where the
 attacker has a list of valid usernames and passwords.
-        * Permits brute force attacks
-        * Permits default, weak, or well-known passwords
-                * i.e. - `Password1`, `admin/admin`
-        * Uses weak or ineffective credential recovery and forgot-password
+    * Permits brute force attacks
+    * Permits default, weak, or well-known passwords
+        * i.e. - `Password1`, `admin/admin`
+    * Uses weak or ineffective credential recovery and forgot-password
 processes such as "knowledge-based answers", which cannot be made
 safe.
 
@@ -111,7 +120,7 @@ the application
 * Restrictions on what authenticated users are allowed to do are not
 properly enforced.
 * Attackers exploit flaws to access unauthorized functionality and/or data.
-        * i.e. - access other user's accounts, view sensitive files, modify
+	* i.e. - access other user's accounts, view sensitive files, modify
 other users' data, change access rights, etc.
 
 ### Is my Application Vulnerable?
@@ -164,29 +173,38 @@ configurations and settings in all environments.
 
 ## 7. Cross-Site Scripting (XSS)
 * Allows attackers to execute scripts in the victim's browser which can:
-        * hijack user sessions
-        * deface web sites
-        * redirect the user to malicious web sites
-* Occurs whenever an application includes untrusted data in a new web
-page without:
-        * proper validation
-        * proper escaping
-        * updates an existing web page with user-supplied data
+	* hijack user sessions
+	* deface web sites
+	* redirect the user to malicious web sites
+	* Occurs whenever an application includes untrusted data in a new web
+	page without:
+	* proper validation
+	* proper escaping
+	* updates an existing web page with user-supplied data
 
 ### Is my Application Vulnerable?
 * **Reflected XSS**
+	* The application or API includes unvalidated and unescaped user input as part of HTML output.
+	* A successful attack can allow the attacker to execute arbitrary HTML and JavaScript in the victim’s browser.
+	* Typically the user will need to interact with some malicious link that points to an attacker-controlled page
+		* i.e. - malicious watering hole websites, advertisements, or similar.
 * **Stored XSS**
+	* The application or API stores unsanitized user input that is viewed at a later time by another user or an administrator.
+	* Stored XSS is often considered a high or critical risk.
 * **DOM XSS**
+	* JavaScript frameworks, single-page applications, and APIs that dynamically include attacker-controllable data to a page are vulnerable to DOM XSS.
+	* Ideally, the application would not send attacker-controllable data to unsafe JavaScript APIs.
 
 
 
 ## 8. Insecure Deserialization
+* Applications and APIs will be vulnerable if they deserialize hostile or tampered objects supplied by an attacker. 
 * Leads to remote code execution
 * Even if deserialization flaws do not result in remote code
 execution, they can be used to perform attacks which include:
-        * replay attacks
-        * injection attacks
-        * privilege escalation attacks
+    * replay attacks
+    * injection attacks
+    * privilege escalation attacks
 
 
 
@@ -197,9 +215,9 @@ execution, they can be used to perform attacks which include:
 * If vulnerable component is exploited, an attack can facilitate data
 loss, or server takeover.
 * Components include:
-        * libraries
-        * frameworks
-        * software modules
+    * libraries
+    * frameworks
+    * software modules
 
 
 
@@ -227,3 +245,8 @@ Exposure](https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure
 Processing](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing)
 * [5. broken access
 control](https://www.owasp.org/index.php/Top_10-2017_A5-Broken_Access_Control)
+* [6. Security Misconfiguration](https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration)
+* [7. Cross-Site Scripting](https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS))
+* [8. Insecure Deserialization](https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization)
+* [9. Using components with known vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities)
+* [10. Insufficient Logging & Monitoring](https://www.owasp.org/index.php/Top_10-2017_A10-Insufficient_Logging%26Monitoring)
