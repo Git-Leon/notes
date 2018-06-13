@@ -51,7 +51,7 @@
 	* Insane asylum
 
 
-# Security
+## Security
 * On my property, I would like to be ready for a lego-zombie apocalpyse.
 * I would like to have the following home-features:
 	* Bunker
