@@ -2,7 +2,7 @@
 
 ### Part 1, Creating The Team Branch
 0. `cd ~/dev`
-1. `git clone https://github.com/Zipcoder/NameOfProject.git`
+1. `git clone https://github.com/GitUser/NameOfProject.git`
 2. `cd NameOfProject`
 3. `git checkout -b nameofteam`
 4. `git add .`
