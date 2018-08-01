@@ -12,7 +12,7 @@
 ## Object Oriented Paradigm
 * An application stores data in Lists.
 * Lists store data in Objects.
-	* A single object in a list is an instance.
+	* A single object in a list is a [transient](https://en.wikipedia.org/wiki/Transient_(computer_programming)) instance.
 	* Each instance has a value associated with each of their properties.
 	* Each instance is defined by a [class](https://en.wikipedia.org/wiki/Class_(computer_programming))
 	* Each instance can be uniquely identified by their [memory address](https://en.wikipedia.org/wiki/Memory_address).
