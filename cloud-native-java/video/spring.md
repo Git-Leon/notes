@@ -62,6 +62,10 @@ RowMapper<Customer> rowMapper =
 * 
 
 ## Annotations
+* `@ConfigurationProperties("prefix")`
+	* annotates a class signature
+	* Annotate a POJO and specify a prefix, and Spring will attempt to map all properties that start with that prefix to the POJO’s properties
+	* tells Spring that this bean is to be used as the root for all properties starting with `prefix`.
 * `@PropertySource`
 	* configures a `PropertySource` from a `.properties` file.
 * `@Value`
@@ -116,6 +120,9 @@ RowMapper<Customer> rowMapper =
 	* Spring perceives them on components and creates a new instance of the object on which they’re applied
 
 * `@SpringBootTest`
+	* indicates that this class is a Spring Boot test class
+	* provides support to scan for a `ContextConfiguration` that tells the test class how to load the ApplicationContext.
+	* If no `ContextConfiguration` classes are specified as a parameter to the `@SpringBootTest` annotation, the default behavior is to load the `ApplicationContext` by scanning for a `@SpringBootConfiguration` annotation on a class in the package root.
 
 * `@AutoConfigureMockMvc`
 	* injects a `MockMvc` instance in `MockMvc` fields annotated with `@Autowired`
