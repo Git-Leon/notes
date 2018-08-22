@@ -44,7 +44,7 @@
 	```java
 RowMapper<Customer> rowMapper =
 (rs, i) -> new Customer(rs.getLong("ID"), rs.getString("EMAIL"));
-```
+	```
 
 * `PropertySourcesPlaceholderConfigurer`
 	* implementation of `BeanFactoryPostProcessor`
