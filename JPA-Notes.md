@@ -352,7 +352,7 @@
 
 * **SQL Syntax:**
 
-	```SQL
+```SQL
 SELECT		*
 FROM		item
 WHERE		unit_cost > 100.00
@@ -362,7 +362,7 @@ ORDER BY	title;
 
 * **JQL Syntax:**
 
-	```SQL
+```SQL
 SELECT		i
 FROM		Item i
 WHERE		i.unitCost > 100.00
