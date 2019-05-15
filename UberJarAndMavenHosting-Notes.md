@@ -4,7 +4,7 @@
 
 ## Configuring your Shade Plugin
 * Add this body to your `pom.xml` to ensure the `mvn package` command will generate an uber jar upon build.
-  * Execute `mvn -Dmaven.test.skip=true package` to **skip testing** upon build.
+  * **To skip testing** upon build execute `mvn -Dmaven.test.skip=true package`.
 
 ```xml
 <project>
