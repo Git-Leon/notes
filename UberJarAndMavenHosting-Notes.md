@@ -35,6 +35,7 @@
 
 ## Creating Uber Jar using Shade plugin
 * Navigate to the root of the project and execute `mvn package` to generate a `.jar` of the project
+* Execute `mvn package Dmaven.test.skip=true` to skip tests upon packaging.
 
 ## Checking the contents of a `.jar` File
 * You can check the contents of a jar file via the `jar tf jar-name` commmand.
